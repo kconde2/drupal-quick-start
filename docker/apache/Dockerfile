@@ -4,7 +4,8 @@ FROM php:7.2-apache
 COPY conf/000-default.conf /etc/apache2/sites-available/
 
 RUN apt-get update \
-	&& apt-get install wget -y \
+	&& apt-get upgrade -y \
+	&& apt-get install wget git-core -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 # install the PHP extensions we need
