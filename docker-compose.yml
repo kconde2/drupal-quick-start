@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  drupal:
+    build: docker/apache
+    # Le port de l'hôte sera mappé sur le port 80 du conteneur Drupal.
+    ports:
+      - 8000:80
+    volumes:
+      # Les sources de Drupal doivent être placées dans le répertoire "drupal" au même niveau que le docker-compose.yml.
+      - ./drupal:/var/www/html:cached
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/php-cli.ini:/usr/local/etc/php/php-cli.ini
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: ouestech
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - 8001:80
