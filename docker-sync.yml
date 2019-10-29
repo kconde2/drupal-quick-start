@@ -1,0 +1,12 @@
+# See https://github.com/EugenMayer/docker-sync/blob/master/example/docker-sync.yml
+
+version: "2"
+
+syncs:
+  docker-sync:
+    src: "./drupal"
+    sync_userid: "82"
+    sync_excludes:
+      [".gitignore", ".git/", ".idea/", ".DS_Store", ".docker-sync"]
+    volumes:
+      - docker-sync:/var/www/html
